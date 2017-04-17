@@ -28,8 +28,8 @@ import android.widget.Toast;
 import com.sairijal.alarm.activities.AlarmDetailsActivity;
 import com.sairijal.alarm.R;
 import com.sairijal.alarm.activities.AlarmActivity;
-import com.sairijal.alarm.alarm.AlarmWrapper;
-import com.sairijal.alarm.alarm.AlarmWrapperHolder;
+import com.sairijal.alarm.alarm.RemindTaskWrapper;
+import com.sairijal.alarm.alarm.RemindTaskWrapperHolder;
 import com.sairijal.alarm.alarm.RemindTask;
 import com.sairijal.alarm.listeners.UndoDeleteListener;
 
@@ -55,10 +55,10 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
     public static final String ADAPTER_TAG = "/time";
 
     // last removed alarm
-    private List<AlarmWrapper> mRemovedAlarm = new ArrayList<AlarmWrapper>();
+    private List<RemindTaskWrapper> mRemovedAlarm = new ArrayList<RemindTaskWrapper>();
 
     // list of alarms
-    private List<AlarmWrapper> mDataset = new ArrayList<AlarmWrapper>();
+    private List<RemindTaskWrapper> mDataset = new ArrayList<RemindTaskWrapper>();
 
     // layout manager of the view this adapter is attached to
     private LinearLayoutManager mLayoutManager;
@@ -97,7 +97,7 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
         }
     }
 
-    public AlarmRecyclerAdapter(Context context, List<AlarmWrapper> mDataset, LinearLayoutManager layoutManager) {
+    public AlarmRecyclerAdapter(Context context, List<RemindTaskWrapper> mDataset, LinearLayoutManager layoutManager) {
         mContext = context;
         mLayoutManager = layoutManager;
         DateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -141,12 +141,12 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        final AlarmWrapper mAlarm = mDataset.get(position);
+        final RemindTaskWrapper mAlarm = mDataset.get(position);
 
         holder.mAlarmCardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlarmWrapperHolder.setInstance(mAlarm);
+                RemindTaskWrapperHolder.setInstance(mAlarm);
                 Intent alarmDetailsIntent = new Intent(mContext, AlarmDetailsActivity.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
@@ -166,7 +166,7 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
             holder.mAlarmTime.setText(alarmTime[0]);
             holder.mAlarmAmPm.setText(alarmTime[1]);
 
-            holder.mAlarmSwitch.setChecked(mAlarm.getState().equals(com.sairijal.alarm.alarm.RemindTask.ON));
+            holder.mAlarmSwitch.setChecked(mAlarm.getState().equals(RemindTask.ON));
 
                     setAlarmCardIcon(mAlarm.getAuthenticationType(), holder.mAlarmSwitch.isChecked(), holder.mAlarmIcon);
 
@@ -175,7 +175,7 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     setAlarmCardIcon(mAlarm.getAuthenticationType(), isChecked, holder.mAlarmIcon);
                     mRealm.beginTransaction();
-                    mAlarm.setState((isChecked) ? RemindTask.ON : com.sairijal.alarm.alarm.RemindTask.OFF);
+                    mAlarm.setState((isChecked) ? RemindTask.ON : RemindTask.OFF);
                     mRealm.commitTransaction();
                 }
             });
@@ -249,7 +249,7 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
 
         scrollToPositionIfNeeded(position);
 
-        AlarmWrapper restoredAlarm = mRemovedAlarm.remove(mRemovedAlarm.size() - 1);
+        RemindTaskWrapper restoredAlarm = mRemovedAlarm.remove(mRemovedAlarm.size() - 1);
 
         // add alarm back to dataset
         mDataset.add(position, restoredAlarm);
@@ -262,14 +262,14 @@ public class AlarmRecyclerAdapter extends RecyclerView.Adapter<AlarmRecyclerAdap
     public void clearAlarms() {
         // cleared cached alarm
         mRealm.beginTransaction();
-        for (AlarmWrapper alarm: mRemovedAlarm){
+        for (RemindTaskWrapper alarm: mRemovedAlarm){
             alarm.removeFromRealm();
         }
         mRemovedAlarm.clear();
         mRealm.commitTransaction();
     }
 
-    public void addAlarm(AlarmWrapper alarm){
+    public void addAlarm(RemindTaskWrapper alarm){
         mDataset.add(alarm);
         Collections.sort(mDataset);
         int insertedPosition = mDataset.indexOf(alarm);

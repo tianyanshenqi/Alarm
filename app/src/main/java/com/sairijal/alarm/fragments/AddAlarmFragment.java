@@ -1,20 +1,31 @@
 package com.sairijal.alarm.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.sairijal.alarm.R;
 import com.sairijal.alarm.activities.AlarmActivity;
-import com.sairijal.alarm.alarm.AlarmWrapper;
+import com.sairijal.alarm.alarm.RemindTaskWrapper;
 import com.sairijal.alarm.alarm.RemindTask;
-import com.sairijal.alarm.alarm.User;
+import com.sairijal.alarm.alarm.UserWrapper;
+import com.sairijal.alarm.dialog.OnUserItemClickListener;
+import com.sairijal.alarm.dialog.UserSelectDialog;
 import com.sairijal.alarm.listeners.AddAlarmClickListener;
 import com.sairijal.alarm.listeners.AlarmTimeSetListener;
 import com.sairijal.alarm.listeners.SetAlarmTimeListener;
@@ -41,6 +52,9 @@ public class AddAlarmFragment extends Fragment {
     private TextView mUserName;
     private TextView mUserPhone;
     private TextView mAmpPmTime;
+    private ImageView mALarmTimeImage;
+    private ImageView mUserImage;
+    private Spinner mSpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +100,10 @@ public class AddAlarmFragment extends Fragment {
         mAmpPmTime = (TextView) mView.findViewById(R.id.time_ampm_picker);
         mUserName = (TextView) mView.findViewById(R.id.username_picker);
         mUserPhone = (TextView) mView.findViewById(R.id.userphone_picker);
+        mALarmTimeImage = (ImageView)mView.findViewById(R.id.time_picker_imageview);
+        mUserImage = (ImageView)mView.findViewById(R.id.user_picker_imageview);
+        mSpinner = (Spinner) mView.findViewById(R.id.type);
+
         mContent = (EditText) mView.findViewById(R.id.content);
         mRepeating = new ToggleButton[7];
         mRepeating[0] = (ToggleButton) mView.findViewById(R.id.monday_repeating);
@@ -102,11 +120,52 @@ public class AddAlarmFragment extends Fragment {
     private void addListeners() {
         AlarmTimeSetListener alarmTimeSetListener = new AlarmTimeSetListener(mALarmTime,mAmpPmTime);
         SetAlarmTimeListener setAlarmTimeListener = new SetAlarmTimeListener(this.getActivity(), alarmTimeSetListener);
-        mALarmTime.setOnClickListener(setAlarmTimeListener);
+        mALarmTimeImage.setOnClickListener(setAlarmTimeListener);
+        mUserImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkPermission()){
+                    showContactDialog();
+                }
+            }
+        });
 
         AddAlarmClickListener confirmClickListener = new AddAlarmClickListener(this);
         mConfirm.setOnClickListener(confirmClickListener);
 
+    }
+
+    private void showContactDialog() {
+        final UserSelectDialog dialog = new UserSelectDialog(getContext());
+        dialog.setOnUserItemClickListener(new OnUserItemClickListener() {
+            @Override
+            public void OnUserItemClick(UserWrapper userWrapper) {
+                dialog.dismiss();
+                mUserName.setText(userWrapper.getName());
+                mUserPhone.setText(userWrapper.getPhone());
+            }
+        });
+        dialog.show();
+    }
+
+    private boolean checkPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            AddAlarmFragment.this.requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},
+                    1);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.READ_CONTACTS)
+                == PackageManager.PERMISSION_GRANTED){
+            showContactDialog();
+        }else{
+        }
     }
 
     public void addAlarm(){
@@ -119,11 +178,11 @@ public class AddAlarmFragment extends Fragment {
             for (int i=0; i<7; i++){
                 repeating[i] = this.mRepeating[i].isChecked();
             }
-            int alarmType = com.sairijal.alarm.alarm.RemindTask.NONE;
+            int alarmType = mSpinner.getSelectedItemPosition();
             String userName = mUserName.getText().toString();
             String userPhone = mUserPhone.getText().toString();
             String content = mContent.getText().toString();
-            AlarmWrapper newAlarm = createAlarm(time,userName, repeating,userPhone,content ,alarmType);
+            RemindTaskWrapper newAlarm = createAlarm(time,userName, repeating,userPhone,content ,alarmType);
             if (getActivity() instanceof  AlarmActivity){
                 ((AlarmActivity) getActivity()).addAlarm(newAlarm);
             }
@@ -133,7 +192,7 @@ public class AddAlarmFragment extends Fragment {
         }
     }
 
-    private AlarmWrapper createAlarm(Time time, String userName, boolean[] repeating, String phone, String content, int alarmType) {
+    private RemindTaskWrapper createAlarm(Time time, String userName, boolean[] repeating, String phone, String content, int alarmType) {
         RemindTask newRemindTask = new RemindTask();
         newRemindTask.setmTime(time.getTime());
         newRemindTask.setRepeatingMonday(repeating[0]);
@@ -143,17 +202,17 @@ public class AddAlarmFragment extends Fragment {
         newRemindTask.setRepeatingFriday(repeating[4]);
         newRemindTask.setRepeatingSaturday(repeating[5]);
         newRemindTask.setRepeatingSunday(repeating[6]);
-        newRemindTask.setAuthenticationType(alarmType);
-        newRemindTask.setState(com.sairijal.alarm.alarm.RemindTask.ON);
+        newRemindTask.setRemindType(alarmType);
+        newRemindTask.setState(RemindTask.ON);
         newRemindTask.setUniqueID(UUID.randomUUID().toString());
         newRemindTask.setContent(content);
-        newRemindTask.setFromName(userName);
+        newRemindTask.setToName(userName);
         newRemindTask.setTo(phone);
 
         mRealm.beginTransaction();
         newRemindTask = mRealm.copyToRealm(newRemindTask);
         mRealm.commitTransaction();
-        return new AlarmWrapper(newRemindTask);
+        return new RemindTaskWrapper(newRemindTask);
     }
 
 }

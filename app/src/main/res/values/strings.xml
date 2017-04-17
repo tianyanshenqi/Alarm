@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="description_delete_alarm">Delete Alarm</string>
     <string name="alarm_days_placeholder">Alarm Days</string>
-    <string name="alarm_time_placeholder">00:00</string>
+    <string name="alarm_time_placeholder">12:00</string>
     <string name="title_activity_add_alarm">AddAlarm</string>
     <string name="add_alarm_transition">addAlarm</string>
     <string name="description_alarm_label">Type a content for this remindTask</string>
@@ -11,7 +11,7 @@
 
     <string name="label_assist">Type a content for this remindTask</string>
     <string name="current_date_placeholder">January 28</string>
-    <string name="current_time_placeholder">00:00 am</string>
+    <string name="current_time_placeholder">12:00 am</string>
     <string name="day_name_placeholder">Thursday</string>
     <string name="alarm_days_text">Mo Tu We Th Fr Sa Su</string>
     <string name="add_cancel_text">Cancel</string>
@@ -33,6 +33,13 @@
     <string name="card_days_transition_name">carddays</string>
     <string name="contact_placeholder">name</string>
     <string name="phonenumber">phoneNumber</string>
-    <string name="send_to" >send to:</string>
+    <string name="send_to">send to:</string>
     <string name="content">content:</string>
+    <string name="no_catact">No contact，please import!</string>
+    <string name="drawer_item_logout">注销</string>
+    <string name="drawer_item_contact">联系人</string>
+    <string name="drawer_item_message">消息</string>
+    <string name="drawer_item_setting">设置</string>
+    <string name="drawer_item_more">更多</string>
+    <string name="drawer_item_Author">作者</string>
 </resources>

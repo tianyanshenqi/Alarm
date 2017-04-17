@@ -14,6 +14,11 @@
     <color name="materialRed">#F44336</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_half" >#77000000</color>
+    <color name="white" >#ffffff</color>
+    <color name="gray_deep">#7d7d7d</color>
+    <color name="loginbar">#53C5C5</color>
 
     <!--add night colors here -->
 

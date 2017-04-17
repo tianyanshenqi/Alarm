@@ -21,7 +21,21 @@ public class RemindTask extends RealmObject{
     private String content;
     private String from;
     private String to;
+    private String toName;
     private String fromName;
+    private int remindType;
+
+    public int getRemindType() {
+        return remindType;
+    }
+
+    public String getToName() {
+        return toName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
+    }
 
     public String getFromName() {
         return fromName;
@@ -43,6 +57,11 @@ public class RemindTask extends RealmObject{
         return to;
     }
 
+
+    /**
+     * 设置接收人电话
+     * @param mTo
+     */
     public void setTo(String mTo) {
         this.to = mTo;
     }
@@ -173,5 +192,9 @@ public class RemindTask extends RealmObject{
 
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
+    }
+
+    public void setRemindType(int remindType) {
+        this.remindType = remindType;
     }
 }

@@ -1,7 +1,5 @@
 package com.sairijal.alarm.alarm;
 
-import com.sairijal.alarm.fragments.UserManager;
-
 import junit.framework.Assert;
 
 import java.text.SimpleDateFormat;
@@ -10,16 +8,16 @@ import java.util.Locale;
 /**
  * Created by sayujya on 2016-02-04.
  */
-public class AlarmWrapper implements Comparable<AlarmWrapper> {
+public class RemindTaskWrapper implements Comparable<RemindTaskWrapper> {
     private RemindTask remindTask;
     private static boolean is24Hours;
 
-    public AlarmWrapper(RemindTask remindTask) {
+    public RemindTaskWrapper(RemindTask remindTask) {
         this.remindTask = remindTask;
     }
 
     @Override
-    public int compareTo(AlarmWrapper another) {
+    public int compareTo(RemindTaskWrapper another) {
         if (this.remindTask.getmTime()>another.remindTask.getmTime()){
             return 1;
         } else if (this.remindTask.getmTime()<another.remindTask.getmTime()) {
@@ -36,7 +34,7 @@ public class AlarmWrapper implements Comparable<AlarmWrapper> {
     public String[] getTime(){
         // set formatter depending on the system date
         SimpleDateFormat formatter;
-        if (AlarmWrapper.is24Hours){
+        if (RemindTaskWrapper.is24Hours){
             formatter = new SimpleDateFormat("HH:mm ", Locale.getDefault());
         } else {
             formatter = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -128,14 +126,14 @@ public class AlarmWrapper implements Comparable<AlarmWrapper> {
     }
 
     public static void setIs24Hours(boolean is24Hours) {
-        AlarmWrapper.is24Hours = is24Hours;
+        RemindTaskWrapper.is24Hours = is24Hours;
     }
 
     public String getUserName() {
-        return this.remindTask.getFromName();
+        return this.remindTask.getToName();
     }
 
     public String getUserPhone() {
-        return this.remindTask.getFrom();
+        return this.remindTask.getTo();
     }
 }

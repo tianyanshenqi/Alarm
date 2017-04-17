@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.sairijal.alarm.adapters.AlarmRecyclerAdapter;
 import com.sairijal.alarm.alarm.RemindTask;
 import com.sairijal.alarm.callbacks.AlarmSwipeTouchHelperCallback;
-import com.sairijal.alarm.alarm.AlarmWrapper;
+import com.sairijal.alarm.alarm.RemindTaskWrapper;
 import com.sairijal.alarm.R;
 import com.sairijal.alarm.application.AlarmApplication;
 
@@ -98,7 +98,7 @@ public class AlarmViewFragment extends Fragment {
         // set Layout Manager
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        List<AlarmWrapper> savedAlarms = loadAlarms();
+        List<RemindTaskWrapper> savedAlarms = loadAlarms();
         // create and set adapter
         mAdapter = new AlarmRecyclerAdapter(this.getActivity(), savedAlarms, mLinearLayoutManager);
         mAdapter.addRealmObject(mRealm);
@@ -111,18 +111,18 @@ public class AlarmViewFragment extends Fragment {
 
     }
 
-    private List<AlarmWrapper> loadAlarms() {
+    private List<RemindTaskWrapper> loadAlarms() {
         RealmQuery<RemindTask> query = mRealm.where(RemindTask.class);
         RealmResults<RemindTask> savedRemindTasks = query.findAll();
         Log.i(AlarmApplication.APP_TAG, String.valueOf(savedRemindTasks.size()));
-        List<AlarmWrapper> savedAlarmsList = new ArrayList<>();
+        List<RemindTaskWrapper> savedAlarmsList = new ArrayList<>();
         for (RemindTask remindTask : savedRemindTasks){
-            savedAlarmsList.add(new AlarmWrapper(remindTask));
+            savedAlarmsList.add(new RemindTaskWrapper(remindTask));
         }
         return  savedAlarmsList;
     }
 
-    public void addAlarm(AlarmWrapper alarm){
+    public void addAlarm(RemindTaskWrapper alarm){
         mAdapter.addAlarm(alarm);
     }
 }

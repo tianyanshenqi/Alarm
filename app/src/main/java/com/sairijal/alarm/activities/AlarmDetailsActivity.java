@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.sairijal.alarm.R;
-import com.sairijal.alarm.alarm.AlarmWrapper;
-import com.sairijal.alarm.alarm.AlarmWrapperHolder;
+import com.sairijal.alarm.alarm.RemindTaskWrapper;
+import com.sairijal.alarm.alarm.RemindTaskWrapperHolder;
 import com.sairijal.alarm.alarm.RemindTask;
 import com.sairijal.alarm.application.AlarmApplication;
 
@@ -29,7 +29,7 @@ import io.realm.Realm;
 
 public class AlarmDetailsActivity extends AppCompatActivity {
 
-    private AlarmWrapper mAlarm;
+    private RemindTaskWrapper mAlarm;
 
     private CardView mContainer;
     private RelativeLayout mAlarmCardLayout;
@@ -84,7 +84,7 @@ public class AlarmDetailsActivity extends AppCompatActivity {
     }
 
     private void fetchIntentData() {
-        mAlarm = AlarmWrapperHolder.getInstance();
+        mAlarm = RemindTaskWrapperHolder.getInstance();
     }
 
     private void findGeneralViews(View itemView) {
@@ -154,7 +154,7 @@ public class AlarmDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 setAlarmCardIcon(mAlarm.getAuthenticationType(), isChecked, mAlarmIcon);
                 mRealm.beginTransaction();
-                mAlarm.setState((isChecked)? com.sairijal.alarm.alarm.RemindTask.ON: com.sairijal.alarm.alarm.RemindTask.OFF);
+                mAlarm.setState((isChecked)? RemindTask.ON: RemindTask.OFF);
                 mRealm.commitTransaction();
             }
         });

@@ -3,7 +3,7 @@
     <string name="action_settings">设置</string>
     <string name="description_delete_alarm">删除提醒</string>
     <string name="alarm_days_placeholder">提醒日期</string>
-    <string name="alarm_time_placeholder">00:00</string>
+    <string name="alarm_time_placeholder">12:00</string>
     <string name="title_activity_add_alarm">添加提醒</string>
     <string name="add_alarm_transition">添加提醒</string>
     <string name="description_alarm_label">输入提醒内容</string>
@@ -35,4 +35,11 @@
     <string name="phonenumber">手机号</string>
     <string name="send_to" >发送到:</string>
     <string name="content">内容:</string>
+    <string name="no_catact">没有联系人，请导入!</string>
+    <string name="drawer_item_logout">注销</string>
+    <string name="drawer_item_contact">联系人</string>
+    <string name="drawer_item_message">消息</string>
+    <string name="drawer_item_setting">设置</string>
+    <string name="drawer_item_more">更多</string>
+    <string name="drawer_item_Author">作者</string>
 </resources>

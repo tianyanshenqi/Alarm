@@ -1,17 +1,16 @@
 package com.sairijal.alarm.alarm;
 
 import android.util.Log;
-import android.view.View;
 
 import com.sairijal.alarm.application.AlarmApplication;
 
 /**
  * Created by sayujya on 2016-02-21.
  */
-public class AlarmWrapperHolder {
-    private static AlarmWrapper ourInstance;
+public class RemindTaskWrapperHolder {
+    private static RemindTaskWrapper ourInstance;
 
-    public static AlarmWrapper getInstance() {
+    public static RemindTaskWrapper getInstance() {
         if (ourInstance == null){
             Log.e(AlarmApplication.APP_TAG, "RemindTask not found. Are you sure you set the alarm?");
             return null;
@@ -20,7 +19,7 @@ public class AlarmWrapperHolder {
         }
     }
 
-    public static void setInstance(AlarmWrapper instance) {
+    public static void setInstance(RemindTaskWrapper instance) {
         ourInstance = instance;
     }
 }

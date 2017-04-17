@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sairijal.alarm">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.AlarmApplication"
         android:allowBackup="true"
@@ -14,13 +18,19 @@
             android:label="@string/app_name"
             android:screenOrientation="userPortrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activities.LaunchActivity"
+            android:theme="@style/NoTitleAndStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/NoTitleAndStatusBar" />
         <activity
             android:name=".activities.AddAlarmActivity"
             android:label="@string/title_activity_add_alarm"
@@ -31,7 +41,25 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_default_ringing"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activities.AlarmDetailsActivity"></activity>
+        <activity android:name=".activities.AlarmDetailsActivity" />
+
+        <receiver
+            android:name=".receiver.TimeTickReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_TICK" />
+                <action android:name="intent.action.MQTT_RECEIVER" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.TimeTickService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.ReceiveMessageActivity"></activity>
     </application>
 
 </manifest>

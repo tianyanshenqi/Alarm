@@ -2,6 +2,8 @@ package com.sairijal.alarm.application;
 
 import android.app.Application;
 
+import com.sairijal.alarm.mqtt.MqttPublishService;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -17,5 +19,6 @@ public class AlarmApplication extends Application {
         super.onCreate();
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfiguration);
+        
     }
 }

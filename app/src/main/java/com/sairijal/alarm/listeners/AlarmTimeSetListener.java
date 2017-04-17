@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.sairijal.alarm.alarm.AlarmWrapper;
+import com.sairijal.alarm.alarm.RemindTaskWrapper;
 import com.sairijal.alarm.application.AlarmApplication;
 
 import java.text.SimpleDateFormat;
@@ -33,7 +33,7 @@ public class AlarmTimeSetListener implements TimePickerDialog.OnTimeSetListener,
         SimpleDateFormat formatter;
         SimpleDateFormat aformatter = null;
         Log.i(AlarmApplication.APP_TAG, hourOfDay + ":" + minute);
-        if (AlarmWrapper.is24Hours()){
+        if (RemindTaskWrapper.is24Hours()){
             formatter = new SimpleDateFormat("HH:mm ", Locale.getDefault());
         } else {
             formatter = new SimpleDateFormat("hh:mm", Locale.getDefault());
