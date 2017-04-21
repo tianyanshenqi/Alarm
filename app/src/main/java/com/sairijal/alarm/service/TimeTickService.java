@@ -38,12 +38,7 @@ public class TimeTickService extends Service {
         registerReceiver(timeTickReceiver, intentFilter);
     }
 
-    private void notificate() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.header);
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
-    }
+
 
     @Override
     public void onDestroy() {

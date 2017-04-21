@@ -13,7 +13,24 @@
     android:paddingStart="@dimen/activity_vertical_margin"
     android:paddingTop="@dimen/card_margin_top"
     android:weightSum="7">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
+        <ToggleButton
+            android:id="@+id/sunday_repeating"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/daystogglecolor"
+            android:textOff="@string/sunday_short"
+            android:textOn="@string/sunday_short" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -128,22 +145,5 @@
             android:textOn="@string/saturday_short" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
 
-        <ToggleButton
-            android:id="@+id/sunday_repeating"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:textColor="@color/daystogglecolor"
-            android:textOff="@string/sunday_short"
-            android:textOn="@string/sunday_short" />
-    </LinearLayout>
 </LinearLayout>

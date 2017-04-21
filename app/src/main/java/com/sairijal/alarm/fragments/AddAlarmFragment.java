@@ -29,10 +29,13 @@ import com.sairijal.alarm.dialog.UserSelectDialog;
 import com.sairijal.alarm.listeners.AddAlarmClickListener;
 import com.sairijal.alarm.listeners.AlarmTimeSetListener;
 import com.sairijal.alarm.listeners.SetAlarmTimeListener;
+import com.sairijal.alarm.sharedpreferences.LoginInfoSharePreference;
+import com.sairijal.alarm.utils.TimeUtil;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -106,13 +109,14 @@ public class AddAlarmFragment extends Fragment {
 
         mContent = (EditText) mView.findViewById(R.id.content);
         mRepeating = new ToggleButton[7];
-        mRepeating[0] = (ToggleButton) mView.findViewById(R.id.monday_repeating);
-        mRepeating[1] = (ToggleButton) mView.findViewById(R.id.tuesday_repeating);
-        mRepeating[2] = (ToggleButton) mView.findViewById(R.id.wednesday_repeating);
-        mRepeating[3] = (ToggleButton) mView.findViewById(R.id.thursday_repeating);
-        mRepeating[4] = (ToggleButton) mView.findViewById(R.id.friday_repeating);
-        mRepeating[5] = (ToggleButton) mView.findViewById(R.id.saturday_repeating);
-        mRepeating[6] = (ToggleButton) mView.findViewById(R.id.sunday_repeating);
+        mRepeating[0] = (ToggleButton) mView.findViewById(R.id.sunday_repeating);
+        mRepeating[1] = (ToggleButton) mView.findViewById(R.id.monday_repeating);
+        mRepeating[2] = (ToggleButton) mView.findViewById(R.id.tuesday_repeating);
+        mRepeating[3] = (ToggleButton) mView.findViewById(R.id.wednesday_repeating);
+        mRepeating[4] = (ToggleButton) mView.findViewById(R.id.thursday_repeating);
+        mRepeating[5] = (ToggleButton) mView.findViewById(R.id.friday_repeating);
+        mRepeating[6] = (ToggleButton) mView.findViewById(R.id.saturday_repeating);
+        mRepeating[TimeUtil.getDayOfWeek()].setChecked(true);
 
         mConfirm = (Button) mView.findViewById(R.id.add_confirm);
     }
@@ -169,9 +173,12 @@ public class AddAlarmFragment extends Fragment {
     }
 
     public void addAlarm(){
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
         try {
             Time time = new Time(formatter.parse(
+                    format2.format(new Date())+" "+
                     this.mALarmTime.getText().toString()+" "+this.mAmpPmTime.getText().toString()
             ).getTime());
             boolean[] repeating = new boolean[7];
@@ -195,18 +202,20 @@ public class AddAlarmFragment extends Fragment {
     private RemindTaskWrapper createAlarm(Time time, String userName, boolean[] repeating, String phone, String content, int alarmType) {
         RemindTask newRemindTask = new RemindTask();
         newRemindTask.setmTime(time.getTime());
-        newRemindTask.setRepeatingMonday(repeating[0]);
-        newRemindTask.setRepeatingTuesday(repeating[1]);
-        newRemindTask.setRepeatingWednesday(repeating[2]);
-        newRemindTask.setRepeatingThursday(repeating[3]);
-        newRemindTask.setRepeatingFriday(repeating[4]);
-        newRemindTask.setRepeatingSaturday(repeating[5]);
-        newRemindTask.setRepeatingSunday(repeating[6]);
+        newRemindTask.setRepeatingSunday(repeating[0]);
+        newRemindTask.setRepeatingMonday(repeating[1]);
+        newRemindTask.setRepeatingTuesday(repeating[2]);
+        newRemindTask.setRepeatingWednesday(repeating[3]);
+        newRemindTask.setRepeatingThursday(repeating[4]);
+        newRemindTask.setRepeatingFriday(repeating[5]);
+        newRemindTask.setRepeatingSaturday(repeating[6]);
+
         newRemindTask.setRemindType(alarmType);
         newRemindTask.setState(RemindTask.ON);
         newRemindTask.setUniqueID(UUID.randomUUID().toString());
         newRemindTask.setContent(content);
         newRemindTask.setToName(userName);
+        newRemindTask.setFrom(LoginInfoSharePreference.getInstancce(getActivity()).getData("userName"));
         newRemindTask.setTo(phone);
 
         mRealm.beginTransaction();

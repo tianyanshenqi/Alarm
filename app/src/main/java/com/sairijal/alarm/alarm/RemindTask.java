@@ -50,7 +50,7 @@ public class RemindTask extends RealmObject{
     }
 
     public void setFrom(String from) {
-        this.from = from;
+        this.from = from.replace(" ","");
     }
 
     public String getTo() {
@@ -62,8 +62,8 @@ public class RemindTask extends RealmObject{
      * 设置接收人电话
      * @param mTo
      */
-    public void setTo(String mTo) {
-        this.to = mTo;
+    public void setTo(String to) {
+        this.to = to.replace(" ","");
     }
 
     @Required

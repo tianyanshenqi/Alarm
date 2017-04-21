@@ -7,9 +7,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.sairijal.alarm.sharedpreferences.LoginInfoSharePreference;
+import com.sairijal.alarm.utils.TimeUtil;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -131,6 +133,9 @@ public class MqttPublishService{
 	}
 
     public void subscribe(){
+		if (TextUtils.isEmpty(subscribeTopic)){
+			return;
+		}
 		try {
 			sampleClient.setCallback(new MqttCallback() {
 				@Override
@@ -150,7 +155,7 @@ public class MqttPublishService{
 					sendBroadcast(msg);*/
 				}
 			});
-			sampleClient.subscribe(subscribeTopic, 1);
+			sampleClient.subscribe(subscribeTopic, 2);
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}

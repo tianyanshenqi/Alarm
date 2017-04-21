@@ -50,6 +50,8 @@ import com.sairijal.alarm.listeners.AddAlarmFabListener;
 import com.sairijal.alarm.listeners.AlarmTimeSetListener;
 import com.sairijal.alarm.listeners.FabDisableAnimationListener;
 import com.sairijal.alarm.listeners.FabEnableAnimationListener;
+import com.sairijal.alarm.mqtt.MqttPublishService;
+import com.sairijal.alarm.service.TimeTickService;
 import com.sairijal.alarm.sharedpreferences.LoginInfoSharePreference;
 
 import android.text.format.DateFormat;
@@ -104,6 +106,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        MqttPublishService.getInstance(this);
         if (DateFormat.is24HourFormat(this)) {
             mWatchTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
         } else {
@@ -116,6 +119,7 @@ public class AlarmActivity extends AppCompatActivity {
         setListeners();
         buildDrawer(savedInstanceState);
         registerReceiver();
+        startService(new Intent(this, TimeTickService.class));
     }
 
     private void registerReceiver() {
