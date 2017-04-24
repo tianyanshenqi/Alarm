@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v7.app.NotificationCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -36,7 +37,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().compareTo(Intent.ACTION_TIME_TICK) == 0) {
-            Toast.makeText(context, "received", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(context, "received", Toast.LENGTH_SHORT).show();
             Log.d("received", "onReceive: ");
 
             if (DateFormat.is24HourFormat(context)) {
@@ -89,8 +90,15 @@ public class TimeTickReceiver extends BroadcastReceiver {
          */
         long[] pattern = {0, 100, 1000, 300, 200, 100, 500, 200, 100};
         builder.setVibrate (pattern);
+        vibrate(context,1000);
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, builder.build());
+    }
+
+    public void vibrate(Context context,int duration)
+    {
+        Vibrator vibs = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibs.vibrate(duration);
     }
     private void matchRemind(final Context context) {
         if (mRealm == null) {

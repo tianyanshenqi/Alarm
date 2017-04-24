@@ -101,6 +101,8 @@ public class AlarmActivity extends AppCompatActivity {
     private IntentFilter intentFilter;
     private PrimaryDrawerItem drawerItemMessage;
     private PrimaryDrawerItem drawerItemLogout;
+    private PrimaryDrawerItem drawerItemSetting;
+    private IDrawerItem drawerItemAuthor;
 
     // Activity lifecycle start
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +146,8 @@ public class AlarmActivity extends AppCompatActivity {
 
         drawerItemLogout = new PrimaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(GoogleMaterial.Icon.gmd_sun).withIdentifier(1);
         drawerItemMessage = new PrimaryDrawerItem().withName(R.string.drawer_item_message).withIcon(FontAwesome.Icon.faw_home).withBadge(messageNum).withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2);
+        drawerItemSetting =  new PrimaryDrawerItem().withName(R.string.drawer_item_setting).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3);
+        drawerItemAuthor = new SecondaryDrawerItem().withName(R.string.drawer_item_Author).withIcon(FontAwesome.Icon.faw_github);
         final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
         final IProfile profile2 = new ProfileDrawerItem().withName("Bernat Borras").withEmail("alorma@github.com").withIcon(Uri.parse("https://avatars3.githubusercontent.com/u/887462?v=3&s=460"));
 
@@ -163,28 +167,30 @@ public class AlarmActivity extends AppCompatActivity {
                 .withActivity(this)
                 /*.withToolbar(toolbar)*/
                 .withHasStableIds(true)
-                .withDrawerLayout(R.layout.crossfade_drawer)
-                .withDrawerWidthDp(72)
-                .withGenerateMiniDrawer(true)
+//                .withDrawerLayout(R.layout.crossfade_drawer)
+
+//                .withGenerateMiniDrawer(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         drawerItemLogout ,
                         drawerItemMessage,
                        /* new PrimaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(3),*/
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_setting).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                        drawerItemSetting,
                         new SectionDrawerItem().withName(R.string.drawer_item_more),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_Author).withIcon(FontAwesome.Icon.faw_github)
+                        drawerItemAuthor
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem instanceof Nameable) {
-                            Toast.makeText(AlarmActivity.this, ((Nameable) drawerItem).getName().getText(AlarmActivity.this), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(AlarmActivity.this, ((Nameable) drawerItem).getName().getText(AlarmActivity.this), Toast.LENGTH_SHORT).show();
                             if (drawerItem==drawerItemLogout){
                                 startActivity(new Intent(AlarmActivity.this,LoginActivity.class));
                                 finish();
                             }else if(drawerItem == drawerItemMessage){
                                 startActivity(new Intent(AlarmActivity.this,ReceiveMessageActivity.class));
+                            }else if (drawerItem == drawerItemAuthor){
+                                Toast.makeText(AlarmActivity.this, "杨鑫森", Toast.LENGTH_SHORT).show();
                             }
                         }
                         switch (position){
@@ -195,8 +201,10 @@ public class AlarmActivity extends AppCompatActivity {
                             case 2:
                                 break;
                             case 3:
+
                                 break;
                             case 4:
+                                Toast.makeText(AlarmActivity.this, "杨鑫森", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         //we do not consume the event and want the Drawer to continue with the event chain
@@ -210,7 +218,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         //get the CrossfadeDrawerLayout which will be used as alternative DrawerLayout for the Drawer
         //the CrossfadeDrawerLayout library can be found here: https://github.com/mikepenz/CrossfadeDrawerLayout
-        crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
+       /* crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
 
         //define maxDrawerWidth
         crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
@@ -240,7 +248,7 @@ public class AlarmActivity extends AppCompatActivity {
             public boolean isCrossfaded() {
                 return crossfadeDrawerLayout.isCrossfaded();
             }
-        });
+        });*/
     }
 
     @NonNull
