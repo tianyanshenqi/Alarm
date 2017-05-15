@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/transparent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.AlarmActivity">
+    tools:context=".activities.RemindTaskActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/alarm_recycler_view"
