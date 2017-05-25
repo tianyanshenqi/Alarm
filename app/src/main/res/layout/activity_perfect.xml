@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bacground"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.PerfectInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:divider="@drawable/spacer_perfect"
+        android:showDividers="middle"
+        android:orientation="vertical"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/layout_background"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/selectable_background"
+            android:orientation="vertical" >
+            <EditText
+                android:id="@+id/realName_ET"
+                android:layout_width="match_parent"
+                android:maxLength="10"
+                android:drawableLeft="@drawable/realnameleft"
+                style="@style/rectangle_edittext_style"
+                android:hint="用户名"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/selectable_background">
+
+            <EditText
+                android:id="@+id/phone_ET"
+                style="@style/rectangle_edittext_style"
+                android:layout_width="match_parent"
+                android:drawableLeft="@drawable/phoneleft"
+                android:hint="手机号"
+                android:maxLength="11"
+                android:numeric="integer"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectable_background"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/setPw_ET"
+                style="@style/rectangle_edittext_style"
+                android:layout_width="match_parent"
+                android:drawableLeft="@drawable/setpasswordleft"
+                android:hint="密码"
+                android:numeric="integer"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectable_background"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/sex"
+                style="@style/rectangle_edittext_style"
+                android:layout_width="match_parent"
+                android:drawableLeft="@drawable/idnumberleft"
+                android:hint="性别"
+                android:textSize="16sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selectable_background"
+            android:orientation="horizontal" >
+            <EditText
+                android:id="@+id/address_ET"
+                android:layout_width="match_parent"
+                android:drawableLeft = "@drawable/idnumberleft"
+                android:hint="住址"
+                style="@style/rectangle_edittext_style"
+                android:textSize="16sp"
+                />
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/edit_BT"
+            style="@style/button_style"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/ensure"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/perfect_tool_bar"
+        android:id="@+id/toolbar" />
+</RelativeLayout>
+

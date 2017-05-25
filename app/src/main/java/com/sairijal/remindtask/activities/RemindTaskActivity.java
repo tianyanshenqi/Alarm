@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -103,6 +104,7 @@ public class RemindTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
         MqttService.getInstance(this);
+
         if (DateFormat.is24HourFormat(this)) {
             mWatchTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
         } else {
@@ -142,15 +144,16 @@ public class RemindTaskActivity extends AppCompatActivity {
         drawerItemMessage = new PrimaryDrawerItem().withName(R.string.drawer_item_message).withIcon(FontAwesome.Icon.faw_home).withBadge(messageNum).withBadgeStyle(new BadgeStyle(Color.RED, Color.RED)).withIdentifier(2);
         drawerItemSetting =  new PrimaryDrawerItem().withName(R.string.drawer_item_setting).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3);
         drawerItemAuthor = new SecondaryDrawerItem().withName(R.string.drawer_item_Author).withIcon(FontAwesome.Icon.faw_github);
-        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
-        final IProfile profile2 = new ProfileDrawerItem().withName("Bernat Borras").withEmail("alorma@github.com").withIcon(Uri.parse("https://avatars3.githubusercontent.com/u/887462?v=3&s=460"));
+        String name = LoginInfoSharePreference.getInstancce(this).getData("registerName");
+        String phone = LoginInfoSharePreference.getInstancce(this).getData("registerPhone");
+        final IProfile profile = new ProfileDrawerItem().withName(name).withEmail(phone).withIcon("https://avatars3.githubusercontent.com/u/1476232?v=3&s=460");
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
-                        profile, profile2
+                        profile
                 )
                 .withSavedInstance(savedInstanceState)
                 .build();

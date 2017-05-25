@@ -19,6 +19,8 @@
     <color name="white" >#ffffff</color>
     <color name="gray_deep">#7d7d7d</color>
     <color name="loginbar">#53C5C5</color>
+    <color name="perfect_tool_bar">#aaACACAC</color>
+    <color name="super_light_grey">#f6f6f6</color>
 
     <!--add night colors here -->
 

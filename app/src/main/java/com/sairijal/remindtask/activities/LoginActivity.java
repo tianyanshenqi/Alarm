@@ -48,28 +48,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_BT:
-                if (!TextUtils.isEmpty(mUsername_ET.getText().toString())) {
-                    LoginInfoSharePreference.getInstancce(this).putData("userName", mUsername_ET.getText().toString());
-                }else{
-                    Toast.makeText(this,"手机号不能为空",Toast.LENGTH_LONG).show();
+
+                if (mUsername_ET.getText().toString().length()==11) {
+                    if (LoginInfoSharePreference.getInstancce(this).getData("registerPhone").equals(mUsername_ET.getText().toString())){
+                        LoginInfoSharePreference.getInstancce(this).putData("userName", mUsername_ET.getText().toString());
+                    }else {
+                        Toast.makeText(this,"请输入已注册的手机号",Toast.LENGTH_LONG).show();
+                        return;
+                    }
                 }
+                else{
+                    Toast.makeText(this,"请输入11位手机号",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (!TextUtils.isEmpty(mPassword_ET.getText().toString())) {
                     LoginInfoSharePreference.getInstancce(this).putData("password", mPassword_ET.getText().toString());
                 }else{
                     Toast.makeText(this,"密码不能为空",Toast.LENGTH_LONG).show();
+                    return;
                 }
-                if (!TextUtils.isEmpty(mUsername_ET.getText().toString())&&!TextUtils.isEmpty(mPassword_ET.getText().toString())){
-                    LoginInfoSharePreference.getInstancce(this).putData("subscribeTopic"
-                            ,mUsername_ET.getText().toString());
-                    LoginInfoSharePreference.getInstancce(this).putData("clientId"
-                            ,String.valueOf((
-                                    mUsername_ET.getText().toString() + mPassword_ET.getText().toString())
-                                    .hashCode()));
-                    launchMainActivity();
-                    finish();
+                if (mUsername_ET.getText().toString().length()==11&&!TextUtils.isEmpty(mPassword_ET.getText().toString())){
+                    if (LoginInfoSharePreference.getInstancce(this).getData("registerPhone").equals(mUsername_ET.getText().toString())&&
+                            LoginInfoSharePreference.getInstancce(this).getData("registerPw").equals(mPassword_ET.getText().toString()) ){
+
+                        LoginInfoSharePreference.getInstancce(this).putData("subscribeTopic"
+                                ,mUsername_ET.getText().toString());
+                        LoginInfoSharePreference.getInstancce(this).putData("clientId"
+                                ,String.valueOf((
+                                        mUsername_ET.getText().toString() + mPassword_ET.getText().toString())
+                                        .hashCode()));
+                        launchMainActivity();
+                        finish();
+                    }else{
+                        Toast.makeText(this,"用户名或密码不正确",Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
             case R.id.register_BT:
+                startActivity(new Intent(this,PerfectInfoActivity.class));
                 break;
         }
     }

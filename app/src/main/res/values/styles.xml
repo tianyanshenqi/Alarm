@@ -54,6 +54,13 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
+    <style name="rectangle_edittext_style" >
+        <item name="android:background" >@drawable/rectangle_edittext</item>
+        <item name="android:textColorHint">@color/abs__bright_foreground_disabled_holo_light</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <color name="abs__bright_foreground_disabled_holo_light">#ffb2b2b2</color>
     <color name="black">#000000</color>
 </resources>

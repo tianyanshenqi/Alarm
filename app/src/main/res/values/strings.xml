@@ -43,4 +43,5 @@
     <string name="drawer_item_more">更多</string>
     <string name="drawer_item_Author">作者</string>
     <string name="message_content">content</string>
+    <string name="ensure">确认</string>
 </resources>

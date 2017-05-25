@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.NotificationCompat;
 import android.telephony.SmsManager;
@@ -119,7 +120,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingTuesday()&&TimeUtil.getDayOfWeek()==TimeUtil.TUEDAY){
@@ -128,7 +129,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingWednesday()&&TimeUtil.getDayOfWeek()==TimeUtil.WENDAY){
@@ -137,7 +138,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingThursday()&&TimeUtil.getDayOfWeek()==TimeUtil.THRDAY){
@@ -146,7 +147,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingFriday()&&TimeUtil.getDayOfWeek()==TimeUtil.FRIDAY){
@@ -155,7 +156,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingSaturday()&&TimeUtil.getDayOfWeek()==TimeUtil.STADAY){
@@ -164,7 +165,7 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
             if(remindTask.isRepeatingSunday()&&TimeUtil.getDayOfWeek()==TimeUtil.SUNDAY){
@@ -173,10 +174,19 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 }else if (remindTask.getRemindType()==1){
                     sendSMS(remindTask);
                 }else {
-
+                    callPhone(context,remindTask);
                 }
             }
         }
+    }
+
+    private void callPhone(Context context, RemindTask remindTask) {
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.CALL");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setData(Uri.parse("tel:" + remindTask.getTo()));
+        context.startActivity(intent);
     }
 
     private void sendSMS(RemindTask remindTask) {
