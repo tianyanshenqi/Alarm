@@ -118,83 +118,87 @@ public class TimeTickReceiver extends BroadcastReceiver {
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask,currentDate,remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
             if(remindTask.isRepeatingTuesday()&&TimeUtil.getDayOfWeek()==TimeUtil.TUEDAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
             if(remindTask.isRepeatingWednesday()&&TimeUtil.getDayOfWeek()==TimeUtil.WENDAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask,currentDate,remindDate);
                 }
             }
             if(remindTask.isRepeatingThursday()&&TimeUtil.getDayOfWeek()==TimeUtil.THRDAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
             if(remindTask.isRepeatingFriday()&&TimeUtil.getDayOfWeek()==TimeUtil.FRIDAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
             if(remindTask.isRepeatingSaturday()&&TimeUtil.getDayOfWeek()==TimeUtil.STADAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
             if(remindTask.isRepeatingSunday()&&TimeUtil.getDayOfWeek()==TimeUtil.SUNDAY){
                 if (remindTask.getRemindType()==0){
                     publish(context, remindTask, currentDate, remindDate);
                 }else if (remindTask.getRemindType()==1){
-                    sendSMS(remindTask);
+                    sendSMS(remindTask, currentDate, remindDate);
                 }else {
-                    callPhone(context,remindTask);
+                    callPhone(context,remindTask, currentDate, remindDate);
                 }
             }
         }
     }
 
-    private void callPhone(Context context, RemindTask remindTask) {
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.CALL");
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.setData(Uri.parse("tel:" + remindTask.getTo()));
-        context.startActivity(intent);
+    private void callPhone(Context context, RemindTask remindTask, Date currentDate, Date remindDate) {
+        if (mWatchTime.format(currentDate).equals(mWatchTime.format(remindDate))) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.CALL");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory("android.intent.category.DEFAULT");
+            intent.setData(Uri.parse("tel:" + remindTask.getTo()));
+            context.startActivity(intent);
+        }
     }
 
-    private void sendSMS(RemindTask remindTask) {
+    private void sendSMS(RemindTask remindTask, Date currentDate, Date remindDate) {
+        if (mWatchTime.format(currentDate).equals(mWatchTime.format(remindDate))) {
             SmsManager manager = SmsManager.getDefault();
             ArrayList<String> text = manager.divideMessage(remindTask.getContent());
-            for (String message : text){
-                manager.sendTextMessage(remindTask.getTo(),null,message,null,null);
+            for (String message : text) {
+                manager.sendTextMessage(remindTask.getTo(), null, message, null, null);
             }
+        }
     }
 
     private void publish(Context context, RemindTask remindTask, Date currentDate, Date remindDate) {
